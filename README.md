@@ -13,3 +13,8 @@
 * H2
 * MySQL
 * Batch
+
+#### 1. Job
+스프링 Batch에서 Job은 하나의 배치 작업 단위입니다.
+
+Job 내부에는 여러 Step이 존재하고, Step 안에는 Tasklet 또는 Reader&Processor&Writer 묶음이 존재합니다.
