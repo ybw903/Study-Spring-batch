@@ -34,3 +34,7 @@ Job Parameter는 Spring Batch가 실행 될 때 외부에서 받을 수 있는 �
 JOB_EXECUTION와 JOB_INSTANCE는 부모-자식 관계입니다.
 
 JOB_EXECUTION은 자신의 부모 JOB_INSTACNE가 성공/실패했던 모든 내역을 갖고 있습니다.
+
+Spring Batch는 동일한 Job Parameter로 성공한 기록이 있을때만 재수행이 안됩니다.
+
+
