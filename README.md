@@ -103,3 +103,41 @@ ExitStatus는 Step의 실행 후 상태를 얘기합니다.
    ExitStatus를 커스텀하게 고치기 위해선 Listener를 생성하고 Job Flow에 등록하는 등 번거로움이 존재합니다.
 
 Spring Batch에서는 Step들의 Flow속에서 분기만 담당하는 JobExecutionDecider 타입이 있습니다.
+
+#### 4. Spring Batch Scope & Job Parameter
+
+**Job Parameter와 Scope**
+
+Spring Batch의 경우 외부 혹은 내부에서 Job Parameter를 받아 여러 Batch 컴포넌트에서 사용할 수 있게 지원해줍니다.
+
+Job Parameter를 사용하기 위해선 항상 Spring Batch 전용 Scope를 선언해야 합니다.
+
+크게 @StepScope와 @JobScope 2가지가 있습니다.
+
+**@StepScope & @JobScope 소개**
+
+ Bean의 생성 시점을 지정된 Scope가 실행되는 시점으로 지연시킵니다.
+ 
+ Step 혹은 Job의 실행시점으로 지연시키면서 얻는 장점은 크게 2가지가 있습니다.
+ 
+ 첫째로, JobParameter의 Late Binding이 가능합니다.
+ 
+ 두번째로, 동일한 컴포넌트를 병렬 혹은 동시에 사용할때 유용합니다.
+
+**Job Parameter 오해**
+
+JobParameters를 사용하기 위해선 꼭 @StepScope, @JobScope로 Bean을 생성해야합니다.
+
+**JobParameter vs 시스템 변수**
+
+첫번째로, 시스템 변수를 사용할 경우 Spring Batch의 Job Parameter 관련 기능을 못쓰게 됩니다.
+
+둘째, Command line이 아닌 다른 방법으로 Job을 실행하기가 어렵습니다.
+
+Job Parameter를 각각의 Batch 컴포넌트들이 사용하면 되니 변경이 심한 경우에도 쉽게 대응할 수 있습니다.
+
+**주의사항**
+
+@Bean과 @StepScope를 함께 쓰는 것은 @Scope (value = "step", proxyMode = TARGET_CLASS)로 표시하는 것과 같습니다.
+
+이 proxyMode로 인해서 문제가 발생할 수 있습니다.
